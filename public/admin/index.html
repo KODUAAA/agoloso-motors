@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Dashboard | Lamont Motors</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@600;700;800&family=Fira+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <script src="/js/boot.js"></script>
+    <script type="module" src="/js/admin.js"></script>
+  </head>
+  <body class="admin">
+    <nav class="admin-nav" aria-label="Dashboard">
+      <div class="admin-bar">
+        <a class="wordmark" href="/" title="View the website">Lamont <span>Motors</span></a>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="admin-menu" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="admin-menu" id="admin-menu">
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#cars">Cars</a></li>
+        <li><a href="#enquiries">Enquiries <span class="nav-count" id="count-enquiries"></span></a></li>
+        <li><a href="#finance">Finance <span class="nav-count" id="count-finance"></span></a></li>
+        <li data-admin-only hidden><a href="#team">Team</a></li>
+        <li><a href="#account">My account</a></li>
+      </ul>
+      <div class="admin-user">
+        <span>Signed in as <strong id="user-name"></strong></span>
+        <button class="btn btn-ghost btn-small" type="button" id="sign-out">Sign out</button>
+      </div>
+      </div>
+    </nav>
+
+    <main class="admin-main" id="admin-main" tabindex="-1"></main>
+
+    <div class="visually-hidden" role="status" aria-live="polite" id="announcer"></div>
+
+    <dialog id="car-dialog" aria-labelledby="car-dialog-title">
+      <form class="dialog-form" id="car-form" method="dialog" novalidate>
+        <h2 id="car-dialog-title" style="font-size: var(--step-2)">Add a car</h2>
+        <div class="form-grid">
+          <label class="field">Make
+            <input name="make" required maxlength="60" list="make-options" />
+            <span class="field-error" data-error-for="make"></span>
+          </label>
+          <label class="field">Model
+            <input name="model" required maxlength="80" />
+            <span class="field-error" data-error-for="model"></span>
+          </label>
+          <label class="field">Year
+            <input name="year" type="number" required min="1950" inputmode="numeric" />
+            <span class="field-error" data-error-for="year"></span>
+          </label>
+          <label class="field">Price
+            <input name="price" type="number" required min="0" step="50" inputmode="numeric" />
+            <span class="field-error" data-error-for="price"></span>
+          </label>
+          <label class="field">Mileage
+            <input name="mileage" type="number" required min="0" inputmode="numeric" />
+            <span class="field-error" data-error-for="mileage"></span>
+          </label>
+          <label class="field">Body type
+            <select name="body_type" required></select>
+          </label>
+          <label class="field">Fuel
+            <select name="fuel_type" required></select>
+          </label>
+          <label class="field">Gearbox
+            <select name="transmission" required></select>
+          </label>
+          <label class="field">Colour <span class="field-hint">(optional)</span>
+            <input name="color" maxlength="40" />
+          </label>
+          <label class="field">Engine <span class="field-hint">(optional)</span>
+            <input name="engine" maxlength="80" placeholder="e.g. 2.0L Turbo" />
+          </label>
+          <label class="field span-2">Description <span class="field-hint">(optional)</span>
+            <textarea name="description" maxlength="5000"></textarea>
+          </label>
+          <label class="field span-2">Photo links <span class="field-hint">One web address per line. The first photo is the main one.</span>
+            <textarea name="images" placeholder="https://..."></textarea>
+            <span class="field-error" data-error-for="images"></span>
+          </label>
+          <label class="field">Status
+            <select name="status">
+              <option value="available">Available</option>
+              <option value="reserved">Reserved</option>
+              <option value="sold">Sold</option>
+            </select>
+          </label>
+          <label class="check" style="align-self: end; padding-bottom: 12px">
+            <input type="checkbox" name="featured" />
+            <span>Feature this car</span>
+          </label>
+        </div>
+        <datalist id="make-options"></datalist>
+        <div class="form-status" role="alert"></div>
+        <div class="dialog-actions">
+          <button class="btn btn-ghost" type="button" data-close>Cancel</button>
+          <button class="btn btn-primary" type="submit" data-busy="Saving...">Save car</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>

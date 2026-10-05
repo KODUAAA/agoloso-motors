@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lamont Motors | Quality used cars</title>
+    <meta name="description" content="Browse quality used cars at Lamont Motors. Book a test drive, apply for finance and get in touch online." />
+    <meta name="theme-color" content="#0b1411" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@600;700;800&family=Fira+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="preload" as="image" href="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=2000&q=75" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <script src="/js/boot.js"></script>
+    <script type="module" src="/js/motion.js"></script>
+    <script type="module" src="/js/home.js"></script>
+  </head>
+  <body class="site">
+    <header class="site-header">
+      <div class="wrap">
+        <a class="wordmark" href="/">Lamont <span>Motors</span></a>
+        <nav class="site-nav" aria-label="Main">
+          <a href="#cars">Cars</a>
+          <a href="#finance">Finance</a>
+          <a href="#visit">Visit us</a>
+        </nav>
+        <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Main">
+      <ul>
+        <li><a href="#cars">Cars</a></li>
+        <li><a href="#finance">Finance</a></li>
+        <li><a href="#visit">Visit us</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <p class="menu-foot">Open Monday to Saturday</p>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-media">
+          <img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=2000&q=75" alt="" fetchpriority="high" />
+          <!-- The photo shows until the video is ready, and stays for reduced-motion and data-saver visitors.
+               To use your own footage, put it in public/media/ and change data-src to /media/your-file.mp4 -->
+          <video class="bg-video" data-src="https://assets.mixkit.co/videos/52427/52427-720.mp4" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+        </div>
+        <div class="wrap hero-content">
+          <h1>
+            <span class="line"><span style="--i: 0">Good used cars,</span></span>
+            <span class="line"><span style="--i: 1">checked and</span></span>
+            <span class="line"><span style="--i: 2">ready to drive</span></span>
+          </h1>
+          <p class="hero-sub" id="hero-sub">Every car is inspected, serviced and priced up front. Find one you like and book a test drive online.</p>
+
+          <form class="quick-search" id="quick-search" role="search" aria-label="Quick car search">
+            <label>Make
+              <select name="make" id="qs-make"><option value="">Any make</option></select>
+            </label>
+            <label>Body type
+              <select name="body_type" id="qs-body"><option value="">Any type</option></select>
+            </label>
+            <label>Max price
+              <select name="max_price" id="qs-price"><option value="">No limit</option></select>
+            </label>
+            <button class="btn btn-sticker" type="submit">Search cars</button>
+          </form>
+        </div>
+        <span class="scroll-cue" aria-hidden="true"></span>
+      </section>
+
+      <!-- Featured cars: full-screen photo panels, filled in by home.js -->
+      <div id="featured"></div>
+
+      <section class="section" aria-labelledby="steps-title">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <div>
+              <h2 id="steps-title">From browsing to driving away</h2>
+              <p class="section-intro">Most customers drive home within a week of their first visit.</p>
+            </div>
+          </div>
+          <ol class="steps">
+            <li data-reveal>
+              <h3>Find your car</h3>
+              <p>Search our stock online. Every listing shows the real price, mileage and condition.</p>
+            </li>
+            <li data-reveal style="--delay: 0.12s">
+              <h3>Book a test drive</h3>
+              <p>Pick a day that suits you. We will have the car cleaned and ready when you arrive.</p>
+            </li>
+            <li data-reveal style="--delay: 0.24s">
+              <h3>Drive it home</h3>
+              <p>Pay outright or spread the cost with finance. We handle the paperwork.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" id="cars" aria-labelledby="cars-title">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <h2 id="cars-title">Cars in stock</h2>
+            <button class="btn btn-ghost filters-toggle" type="button" aria-expanded="false" aria-controls="filters">Filters</button>
+          </div>
+
+          <div class="inventory">
+            <form class="filters" id="filters" aria-label="Filter cars">
+              <label class="field">Search
+                <input type="search" name="q" placeholder="e.g. Tacoma, sunroof" />
+              </label>
+              <label class="field">Make
+                <select name="make"><option value="">Any make</option></select>
+              </label>
+              <label class="field">Body type
+                <select name="body_type"><option value="">Any type</option></select>
+              </label>
+              <label class="field">Fuel
+                <select name="fuel_type"><option value="">Any fuel</option></select>
+              </label>
+              <label class="field">Gearbox
+                <select name="transmission"><option value="">Any gearbox</option></select>
+              </label>
+              <div class="form-grid">
+                <label class="field">Min price
+                  <input type="number" name="min_price" min="0" step="500" inputmode="numeric" />
+                </label>
+                <label class="field">Max price
+                  <input type="number" name="max_price" min="0" step="500" inputmode="numeric" />
+                </label>
+              </div>
+              <label class="field">Newer than
+                <select name="min_year"><option value="">Any year</option></select>
+              </label>
+              <div class="filters-actions">
+                <button class="btn btn-primary" type="submit">Show cars</button>
+                <button class="btn btn-ghost" type="reset">Clear</button>
+              </div>
+            </form>
+
+            <div>
+              <div class="results-bar">
+                <p class="results-count" id="results-count" aria-live="polite"></p>
+                <label>
+                  <span class="visually-hidden">Sort by</span>
+                  <select id="sort" name="sort">
+                    <option value="newest">Newest listings</option>
+                    <option value="price_asc">Price: low to high</option>
+                    <option value="price_desc">Price: high to low</option>
+                    <option value="mileage_asc">Lowest mileage</option>
+                    <option value="year_desc">Newest year</option>
+                  </select>
+                </label>
+              </div>
+              <div class="car-grid" id="car-grid"></div>
+              <nav class="pager" id="pager" aria-label="Pages"></nav>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="feature" aria-labelledby="finance-feature-title">
+        <div class="feature-media">
+          <div class="parallax-layer" data-parallax>
+            <img src="https://images.unsplash.com/photo-1559416523-140ddc3d238c?auto=format&fit=crop&w=2000&q=70" alt="" loading="lazy" />
+            <video class="bg-video" data-src="https://assets.mixkit.co/videos/47615/47615-720.mp4" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+          </div>
+        </div>
+        <div class="wrap feature-content" data-reveal>
+          <h2 id="finance-feature-title">Spread the cost</h2>
+          <p class="feature-specs">Finance on any car in stock, with terms from one to seven years.</p>
+          <div class="feature-actions"><a class="btn btn-outline" href="#finance">Work out a payment</a></div>
+        </div>
+      </section>
+
+      <section class="section" id="finance" aria-labelledby="finance-title">
+        <div class="wrap">
+          <div class="section-head" data-reveal>
+            <div>
+              <h2 id="finance-title">Work out your monthly payment</h2>
+              <p class="section-intro">Change the numbers to see what a car could cost each month. When you find a car, you can apply for finance from its page.</p>
+            </div>
+          </div>
+
+          <div class="calculator">
+            <form class="calc-inputs" id="calculator" aria-label="Finance calculator" data-reveal>
+              <label class="field">Car price
+                <input type="number" name="price" min="1000" step="500" value="25000" inputmode="numeric" />
+              </label>
+              <label class="field">Deposit
+                <input type="number" name="deposit" min="0" step="500" value="5000" inputmode="numeric" />
+                <span class="field-error" data-error-for="deposit"></span>
+              </label>
+              <label class="field">Pay over
+                <select name="term"></select>
+              </label>
+            </form>
+
+            <div class="calc-result" aria-live="polite" data-reveal style="--delay: 0.12s">
+              <p>Estimated monthly payment</p>
+              <p class="sticker" id="calc-monthly">-</p>
+              <dl>
+                <dt>Amount borrowed</dt><dd id="calc-principal">-</dd>
+                <dt>Interest rate</dt><dd id="calc-apr">-</dd>
+                <dt>Total interest</dt><dd id="calc-interest">-</dd>
+                <dt>Total to repay</dt><dd id="calc-total">-</dd>
+              </dl>
+              <p class="calc-note">This is an estimate, not an offer of credit. Your rate depends on your circumstances.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="visit" aria-labelledby="visit-title">
+        <div class="wrap visit">
+          <div class="visit-details" data-reveal>
+            <h2 id="visit-title">Visit the showroom</h2>
+            <div>
+              <h3>Address</h3>
+              <!-- Replace with the dealership's real address -->
+              <p>Your street address<br />Your city</p>
+            </div>
+            <div>
+              <h3>Opening hours</h3>
+              <dl class="hours">
+                <dt>Monday to Friday</dt><dd>8:30am to 6pm</dd>
+                <dt>Saturday</dt><dd>9am to 5pm</dd>
+                <dt>Sunday</dt><dd>Closed</dd>
+              </dl>
+            </div>
+          </div>
+
+          <form class="contact-form" id="contact" novalidate data-reveal style="--delay: 0.12s">
+            <h3>Send us a message</h3>
+            <div class="form-grid">
+              <label class="field">Name
+                <input name="name" autocomplete="name" required maxlength="100" />
+                <span class="field-error" data-error-for="name"></span>
+              </label>
+              <label class="field">Email
+                <input name="email" type="email" autocomplete="email" required />
+                <span class="field-error" data-error-for="email"></span>
+              </label>
+              <label class="field span-2">Phone <span class="field-hint">(optional)</span>
+                <input name="phone" type="tel" autocomplete="tel" />
+                <span class="field-error" data-error-for="phone"></span>
+              </label>
+              <label class="field span-2">Message
+                <textarea name="message" required maxlength="2000"></textarea>
+                <span class="field-error" data-error-for="message"></span>
+              </label>
+            </div>
+            <label class="honeypot" aria-hidden="true">Website <input name="website" tabindex="-1" autocomplete="off" /></label>
+            <div class="form-status" role="status"></div>
+            <div><button class="btn btn-primary" type="submit">Send message</button></div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>&copy; <span id="year"></span> Lamont Motors</p>
+        <a href="/admin/">Staff sign in</a>
+      </div>
+    </footer>
+  </body>
+</html>

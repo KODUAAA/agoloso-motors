@@ -1,6 +1,6 @@
 // Shared helpers for the public site and the admin dashboard
 
-const TOKEN_KEY = 'lamont.token';
+const TOKEN_KEY = 'agoloso.token';
 
 export const token = {
   get() {

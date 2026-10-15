@@ -21,7 +21,7 @@ export const config = {
   // Needed so rate limiting sees the real visitor IP.
   trustProxy: Number(env.TRUST_PROXY ?? 1),
 
-  dealershipName: env.DEALERSHIP_NAME ?? 'Lamont Motors',
+  dealershipName: env.DEALERSHIP_NAME ?? 'Agoloso Motors',
   currency: env.CURRENCY ?? 'USD',
   distanceUnit: env.DISTANCE_UNIT === 'mi' ? 'mi' : 'km',
   defaultApr: Number(env.DEFAULT_APR ?? 9.9),

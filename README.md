@@ -1,4 +1,4 @@
-# Lamont Motors
+# Agoloso Motors
 
 A full-stack car dealership platform: a public website where customers browse stock, book test drives and apply for finance, and an admin dashboard where staff manage inventory, enquiries and applications.
 
@@ -70,7 +70,7 @@ The website and API are served by the same Express app, so one web service is en
 The tests create and wipe tables, so give them their own empty database:
 
 ```bash
-TEST_DATABASE_URL=postgresql://user:password@localhost:5432/lamont_test npm test
+TEST_DATABASE_URL=postgresql://user:password@localhost:5432/agoloso_test npm test
 ```
 
 Without `TEST_DATABASE_URL` the suite is skipped.

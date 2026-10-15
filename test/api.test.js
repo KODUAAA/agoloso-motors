@@ -1,6 +1,6 @@
 // End-to-end API tests against a real Postgres database.
 // They wipe the tables they use, so point TEST_DATABASE_URL at a throwaway database:
-//   TEST_DATABASE_URL=postgres://user:pass@localhost:5432/lamont_test npm test
+//   TEST_DATABASE_URL=postgres://user:pass@localhost:5432/agoloso_test npm test
 import assert from 'node:assert/strict';
 import { after, before, describe, test } from 'node:test';
 
@@ -14,7 +14,7 @@ process.env.ADMIN_EMAIL = 'admin@test.local';
 process.env.ADMIN_PASSWORD = 'admin-password-123';
 process.env.DEFAULT_APR = '10';
 
-describe('Lamont Motors API', { skip: !TEST_DB && 'set TEST_DATABASE_URL to run the API tests' }, () => {
+describe('Agoloso Motors API', { skip: !TEST_DB && 'set TEST_DATABASE_URL to run the API tests' }, () => {
   let server;
   let base;
   let pool;

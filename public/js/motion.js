@@ -138,12 +138,18 @@ if (toggle && menu) {
     toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     menu.classList.toggle('is-open', open);
     document.body.classList.toggle('menu-open', open);
-    if (open) requestAnimationFrame(() => menu.querySelector('a')?.focus());
+    // Focus the panel (not the first link) so tapping doesn't draw a focus ring; Tab reaches the links
+    if (open) requestAnimationFrame(() => menu.focus({ preventScroll: true }));
   };
 
   toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
   menu.addEventListener('click', (event) => {
     if (event.target.closest('a')) setOpen(false);
+  });
+  // Tapping the dimmed page beside the panel closes it
+  document.addEventListener('click', (event) => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    if (open && !menu.contains(event.target) && !toggle.contains(event.target)) setOpen(false);
   });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {

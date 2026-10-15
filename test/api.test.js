@@ -248,6 +248,64 @@ describe('Lamont Motors API', { skip: !TEST_DB && 'set TEST_DATABASE_URL to run 
     });
   });
 
+  describe('sourcing requests (find me a car)', () => {
+    const request = {
+      make: 'BMW', model: 'X5', year_min: 2019, year_max: 2022, trim: 'M Sport', color: 'Black',
+      max_mileage: 60000, budget: 45000, timeframe: 'within_1_month',
+      name: 'Yaw', email: 'Yaw@Example.com', phone: '+233 20 555 0101', message: 'Need 7 seats',
+    };
+    let requestId;
+
+    test('a customer can submit a request', async () => {
+      const { status, data } = await call('/sourcing', { method: 'POST', body: request });
+      assert.equal(status, 201);
+      assert.equal(data.data.status, 'new');
+      requestId = data.data.id;
+    });
+
+    test('reports every missing field at once', async () => {
+      const { status, data } = await call('/sourcing', { method: 'POST', body: {} });
+      assert.equal(status, 400);
+      assert.deepEqual(
+        data.details.map((d) => d.field).sort(),
+        ['budget', 'email', 'make', 'model', 'name', 'phone', 'timeframe'],
+      );
+    });
+
+    test('rejects a year range that runs backwards', async () => {
+      const { status, data } = await call('/sourcing', { method: 'POST', body: { ...request, year_min: 2023, year_max: 2019 } });
+      assert.equal(status, 400);
+      assert.equal(data.details[0].field, 'year_max');
+    });
+
+    test('only staff can see requests', async () => {
+      assert.equal((await call('/sourcing')).status, 401);
+      const { data } = await call('/sourcing?status=open', { token: adminToken });
+      assert.equal(data.total, 1);
+      assert.equal(data.data[0].email, 'yaw@example.com');
+      assert.equal(data.data[0].max_mileage, 60000);
+    });
+
+    test('staff move a request through the stages', async () => {
+      const quoted = await call(`/sourcing/${requestId}`, { method: 'PATCH', token: adminToken, body: { quote_amount: 43800, status: 'quote_sent' } });
+      assert.equal(quoted.data.data.quote_amount, 43800);
+      assert.equal(quoted.data.data.status, 'quote_sent');
+
+      const delivered = await call(`/sourcing/${requestId}`, { method: 'PATCH', token: adminToken, body: { status: 'delivered', notes: 'Handed over' } });
+      assert.equal(delivered.data.data.notes, 'Handed over');
+      assert.equal(delivered.data.data.quote_amount, 43800, 'fields not sent are left alone');
+
+      // Delivered requests drop out of the "still in progress" list
+      assert.equal((await call('/sourcing?status=open', { token: adminToken })).data.total, 0);
+      assert.equal((await call('/sourcing?status=bogus', { token: adminToken })).status, 400);
+    });
+
+    test('the model lookup rejects odd make names before calling NHTSA', async () => {
+      const { status } = await call('/catalog/models?make=%3Cscript%3E');
+      assert.equal(status, 400);
+    });
+  });
+
   test('dashboard stats add up', async () => {
     const { data } = await call('/stats', { token: adminToken });
     assert.equal(data.data.inventory.sold, 1);

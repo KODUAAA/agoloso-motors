@@ -338,6 +338,9 @@ p {
 .motion .mobile-menu.is-open li:nth-child(4) {
   transition-delay: 0.18s;
 }
+.motion .mobile-menu.is-open li:nth-child(5) {
+  transition-delay: 0.24s;
+}
 
 body.menu-open {
   overflow: hidden;
@@ -1530,6 +1533,167 @@ body.no-hero main {
   background: var(--surface-2);
   border-radius: var(--radius);
   font-variant-numeric: tabular-nums;
+}
+
+/* ================= Find me a car ================= */
+.find {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 56px;
+  padding-top: 48px;
+  padding-bottom: 96px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .find {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-top: 32px;
+  }
+}
+
+.find-intro {
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+}
+
+@media (max-width: 900px) {
+  .find-intro {
+    position: static;
+  }
+}
+
+.find-intro h1 {
+  font-size: var(--step-4);
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+/* The five stages of a sourcing request, in order */
+.find-steps {
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: find-step;
+  display: grid;
+  gap: 16px;
+}
+
+.find-steps li {
+  counter-increment: find-step;
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 2px 14px;
+  color: var(--muted);
+}
+
+.find-steps li::before {
+  content: counter(find-step);
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--sticker);
+  font-family: var(--font-display);
+  font-weight: 700;
+}
+
+.find-steps strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.find-note {
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: var(--step--1);
+}
+
+.find-form {
+  display: grid;
+  gap: 28px;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.find-form fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.find-form legend {
+  margin-bottom: 14px;
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 700;
+}
+
+.find-form fieldset + fieldset {
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.find-form #make-other {
+  margin-top: 8px;
+}
+
+.find-done {
+  gap: 16px;
+}
+
+.find-done .sticker {
+  justify-self: start;
+  font-size: var(--step-1);
+  transform: rotate(-2deg);
+}
+
+.find-done h2 {
+  font-size: var(--step-3);
+}
+
+.source-band {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px 32px;
+  margin-top: 48px;
+  padding: 24px 28px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--sticker);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.source-band h3 {
+  font-size: var(--step-2);
+  margin-bottom: 4px;
+}
+
+.source-band p {
+  color: var(--muted);
+  max-width: 56ch;
+}
+
+/* Prompt shown when a search finds nothing in stock */
+.source-cta {
+  margin-top: 16px;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+.source-cta p {
+  color: var(--muted);
 }
 
 /* ================= Footer ================= */

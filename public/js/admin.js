@@ -192,6 +192,7 @@ async function overview() {
       'div',
       { class: 'tiles' },
       tile(s.leads.new, s.leads.new === 1 ? 'New enquiry' : 'New enquiries', '#enquiries', s.leads.new > 0),
+      tile(s.sourcing.new, s.sourcing.new === 1 ? 'New car request' : 'New car requests', '#sourcing', s.sourcing.new > 0),
       tile(s.finance.pending, 'Finance applications to review', '#finance', s.finance.pending > 0),
       tile(s.leads.upcoming_test_drives, 'Upcoming test drives', '#enquiries'),
       tile(s.inventory.available, 'Cars available', '#cars'),
@@ -535,6 +536,155 @@ async function finance() {
   load();
 }
 
+// ---------- Car requests ("Find me a car" sourcing) ----------
+const SOURCING_STAGES = ['new', 'searching', 'quote_sent', 'deposit_paid', 'shipping', 'delivered'];
+const SOURCING_STATUSES = [...SOURCING_STAGES, 'cancelled'];
+const sourcingState = { status: 'open', q: '', page: 1 };
+
+function yearsText(r) {
+  if (r.year_min && r.year_max) return r.year_min === r.year_max ? `${r.year_min}` : `${r.year_min} to ${r.year_max}`;
+  if (r.year_min) return `${r.year_min} or newer`;
+  if (r.year_max) return `${r.year_max} or older`;
+  return 'Any year';
+}
+
+// Where a request is in the process, as a row of stages
+function stageTracker(status) {
+  const current = SOURCING_STAGES.indexOf(status);
+  if (status === 'cancelled') return h('p', { class: 'badge badge-closed' }, 'Cancelled');
+  return h(
+    'ol',
+    { class: 'stages', 'aria-label': 'Progress' },
+    SOURCING_STAGES.map((stage, i) =>
+      h('li', { class: i < current ? 'is-done' : i === current ? 'is-current' : '', 'aria-current': i === current ? 'step' : null }, label(stage)),
+    ),
+  );
+}
+
+async function sourcing() {
+  const status = h(
+    'select',
+    { 'aria-label': 'Filter by status' },
+    h('option', { value: 'open' }, 'Still in progress'),
+    h('option', { value: '' }, 'All requests'),
+    optionsFor(SOURCING_STATUSES, sourcingState.status),
+  );
+  status.value = sourcingState.status;
+  const search = h('input', { type: 'search', placeholder: 'Search customer, make or model', value: sourcingState.q, 'aria-label': 'Search car requests' });
+  const results = h('div', {}, h('div', { class: 'skeleton', style: 'min-height:240px' }));
+  main.replaceChildren(
+    pageHead('Car requests'),
+    h('p', { class: 'muted', style: 'margin:-12px 0 20px;max-width:70ch' }, 'Cars customers asked us to find through the "Find me a car" page. Move each one through the stages as you source it.'),
+    h('div', { class: 'toolbar' }, search, status),
+    results,
+  );
+  status.addEventListener('change', () => ((sourcingState.status = status.value), (sourcingState.page = 1), load()));
+  search.addEventListener('input', debounce(() => ((sourcingState.q = search.value.trim()), (sourcingState.page = 1), load())));
+
+  async function load() {
+    const params = new URLSearchParams({ page: sourcingState.page, limit: 20 });
+    if (sourcingState.status) params.set('status', sourcingState.status);
+    if (sourcingState.q) params.set('q', sourcingState.q);
+    let result;
+    try {
+      result = await authed(`/sourcing?${params}`);
+    } catch (err) {
+      results.replaceChildren(h('div', { class: 'empty-state' }, h('p', {}, err.message)));
+      return;
+    }
+    const save = (id, body) => authed(`/sourcing/${id}`, { method: 'PATCH', body });
+
+    const rows = result.data.flatMap((r) => {
+      const wanted = [yearsText(r), r.trim, r.color, r.max_mileage != null && `under ${fmt.distance(r.max_mileage)}`].filter(Boolean).join(', ');
+
+      // Quote form: saving a quote moves an early-stage request to "Quote sent"
+      const quoteForm = h(
+        'form',
+        { class: 'field', novalidate: true },
+        'Quoted price (delivered)',
+        h('input', { name: 'quote_amount', type: 'number', min: 0, step: 50, inputmode: 'numeric', value: r.quote_amount ?? '' }),
+        h('span', { class: 'field-error', dataset: { errorFor: 'quote_amount' } }),
+        h('div', { class: 'form-status', role: 'status' }),
+        h('div', {}, h('button', { class: 'btn btn-primary btn-small', type: 'submit', dataset: { busy: 'Saving...' } }, 'Save quote')),
+      );
+      handleForm(
+        quoteForm,
+        (values) => {
+          const body = { quote_amount: values.quote_amount ?? null };
+          if (values.quote_amount != null && ['new', 'searching'].includes(r.status)) body.status = 'quote_sent';
+          return save(r.id, body);
+        },
+        {
+          onSuccess: () => {
+            announce('Quote saved.');
+            refreshCounts();
+            load();
+          },
+        },
+      );
+
+      return expandableRow(
+        [
+          h('td', {}, formatDate(r.created_at, true)),
+          contactCell(r),
+          h('td', {}, h('strong', {}, `${r.make} ${r.model}`), h('span', { class: 'cell-sub' }, wanted)),
+          h(
+            'td',
+            { class: 'num' },
+            fmt.money(r.budget),
+            r.quote_amount != null && h('span', { class: 'cell-sub' }, `Quoted ${fmt.money(r.quote_amount)}`),
+          ),
+          h('td', {}, label(r.timeframe)),
+          h('td', {}, statusSelect(SOURCING_STATUSES, r.status, async (value) => {
+            await save(r.id, { status: value });
+            load();
+          }, `Request from ${r.name}`)),
+        ],
+        h(
+          'div',
+          { class: 'detail detail-wide' },
+          h('div', { class: 'span-all' }, stageTracker(r.status)),
+          h('div', {}, h('strong', {}, 'Customer notes'), h('p', { class: 'detail-message' }, r.message || 'None.')),
+          h(
+            'div',
+            { style: 'display:grid;gap:16px' },
+            quoteForm,
+            notesEditor(r, (notes) => save(r.id, { notes })),
+            isAdmin &&
+              h(
+                'button',
+                {
+                  class: 'btn btn-danger btn-small',
+                  style: 'justify-self:start',
+                  onclick: async () => {
+                    if (!confirm(`Delete the request from ${r.name}? This can't be undone.`)) return;
+                    await authed(`/sourcing/${r.id}`, { method: 'DELETE' }).then(load, (err) => alert(err.message));
+                    refreshCounts();
+                  },
+                },
+                'Delete request',
+              ),
+          ),
+        ),
+        7,
+      );
+    });
+
+    const filtered = sourcingState.q || (sourcingState.status && sourcingState.status !== 'open');
+    results.replaceChildren(
+      dataTable(
+        [{ title: 'Received' }, { title: 'Customer' }, { title: 'Car wanted' }, { title: 'Budget', class: 'num' }, { title: 'Needed' }, { title: 'Stage' }, { title: '', class: 'actions' }],
+        rows,
+        filtered
+          ? 'No requests match these filters.'
+          : 'No car requests in progress. They appear here when customers use the "Find me a car" page.',
+      ),
+      pager(result, (page) => ((sourcingState.page = page), load())),
+    );
+  }
+  load();
+}
+
 // ---------- Team (admins only) ----------
 async function team() {
   if (!isAdmin) {
@@ -625,8 +775,8 @@ function account() {
 }
 
 // ---------- Navigation ----------
-const views = { overview, cars, enquiries, finance, team, account };
-const titles = { overview: 'Overview', cars: 'Cars', enquiries: 'Enquiries', finance: 'Finance applications', team: 'Team', account: 'My account' };
+const views = { overview, cars, enquiries, sourcing, finance, team, account };
+const titles = { overview: 'Overview', cars: 'Cars', enquiries: 'Enquiries', sourcing: 'Car requests', finance: 'Finance applications', team: 'Team', account: 'My account' };
 
 async function route() {
   const name = views[location.hash.slice(1)] ? location.hash.slice(1) : 'overview';
@@ -649,6 +799,7 @@ async function refreshCounts() {
     const { data } = await authed('/stats');
     $('#count-enquiries').textContent = data.leads.new || '';
     $('#count-finance').textContent = data.finance.pending || '';
+    $('#count-sourcing').textContent = data.sourcing.new || '';
   } catch {
     /* counts are a convenience; ignore failures */
   }

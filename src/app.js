@@ -7,8 +7,10 @@ import { config, isProduction } from './config.js';
 import { query } from './db/index.js';
 import { errorHandler, notFound } from './middleware/errors.js';
 import authRoutes from './routes/auth.js';
+import catalogRoutes from './routes/catalog.js';
 import financeRoutes, { TERMS } from './routes/finance.js';
 import leadRoutes from './routes/leads.js';
+import sourcingRoutes, { TIMEFRAMES } from './routes/sourcing.js';
 import statsRoutes from './routes/stats.js';
 import vehicleRoutes, { BODY_TYPES, FUEL_TYPES, TRANSMISSIONS } from './routes/vehicles.js';
 
@@ -57,6 +59,7 @@ export function createApp() {
       bodyTypes: BODY_TYPES,
       fuelTypes: FUEL_TYPES,
       transmissions: TRANSMISSIONS,
+      sourcingTimeframes: TIMEFRAMES,
     });
   });
 
@@ -64,6 +67,8 @@ export function createApp() {
   app.use('/api/vehicles', vehicleRoutes);
   app.use('/api/leads', leadRoutes);
   app.use('/api/finance', financeRoutes);
+  app.use('/api/catalog', catalogRoutes);
+  app.use('/api/sourcing', sourcingRoutes);
   app.use('/api/stats', statsRoutes);
   app.use('/api', notFound);
 

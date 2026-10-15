@@ -113,6 +113,9 @@ const LABELS = {
   suv: 'SUV',
   self_employed: 'Self-employed',
   test_drive: 'Test drive',
+  asap: 'As soon as possible',
+  within_1_month: 'Within a month',
+  within_3_months: 'Within 3 months',
 };
 export const label = (value) =>
   LABELS[value] ?? String(value).charAt(0).toUpperCase() + String(value).slice(1).replaceAll('_', ' ');

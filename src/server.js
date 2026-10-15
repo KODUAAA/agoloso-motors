@@ -1,11 +1,13 @@
 import { createApp } from './app.js';
 import { assertConfig, config } from './config.js';
 import { pool } from './db/index.js';
+import { warmCatalogCache } from './routes/catalog.js';
 
 assertConfig('databaseUrl', 'jwtSecret');
 
 const server = createApp().listen(config.port, () => {
   console.log(`${config.dealershipName} running at http://localhost:${config.port}`);
+  warmCatalogCache();
 });
 
 // Finish in-flight requests and close database connections on shutdown (e.g. during a redeploy)

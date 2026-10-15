@@ -299,6 +299,49 @@ td select {
   }
 }
 
+.detail-wide {
+  max-width: 1000px;
+}
+
+.detail .span-all {
+  grid-column: 1 / -1;
+}
+
+/* Sourcing progress: New -> Searching -> ... -> Delivered */
+.stages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: stage;
+}
+
+.stages li {
+  counter-increment: stage;
+  flex: 1 1 110px;
+  padding: 8px 10px;
+  border-top: 4px solid var(--line);
+  color: var(--muted);
+  font-size: var(--step--1);
+}
+
+.stages li::before {
+  content: counter(stage) '. ';
+}
+
+.stages li.is-done {
+  border-top-color: var(--forecourt-2);
+  color: var(--ink);
+}
+
+.stages li.is-current {
+  border-top-color: var(--sticker);
+  color: var(--ink);
+  font-weight: 700;
+}
+
 .detail-message {
   white-space: pre-wrap;
 }
@@ -329,6 +372,7 @@ td select {
 
 .badge-sold,
 .badge-declined,
+.badge-cancelled,
 .badge-closed {
   background: #ececec;
   color: var(--muted);

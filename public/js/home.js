@@ -86,6 +86,14 @@ function carCard(v, index) {
   );
 }
 
+function findLink(filters) {
+  const params = new URLSearchParams();
+  if (filters.make) params.set('make', filters.make);
+  if (filters.q) params.set('model', filters.q);
+  const query = params.toString();
+  return `/find${query ? `?${query}` : ''}`;
+}
+
 let requestId = 0;
 async function load(state) {
   const id = ++requestId;
@@ -120,6 +128,13 @@ async function load(state) {
         { class: 'empty-state' },
         h('p', {}, hasFilters ? 'No cars match those filters.' : 'There are no cars listed right now.'),
         hasFilters && h('button', { class: 'btn btn-ghost', onclick: () => writeState({ filters: {}, sort: state.sort, page: 1 }) }, 'Clear filters'),
+        // Not in stock? Offer to source it, carrying over what they searched for
+        h(
+          'div',
+          { class: 'source-cta' },
+          h('p', {}, "Can't find what you want? We can source it for you."),
+          h('a', { class: 'btn btn-sticker', href: findLink(state.filters) }, 'Find me a car'),
+        ),
       ),
     );
   } else {

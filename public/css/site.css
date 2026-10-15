@@ -2,16 +2,16 @@
    :root holds the light tokens used by the admin dashboard;
    body.site switches the public website to its dark, cinematic theme. */
 :root {
-  --forecourt: #10322a;
-  --forecourt-2: #1c4a3d;
-  --sticker: #f4c430;
-  --sticker-ink: #1d1a0c;
-  --paper: #f6f7f5;
+  --forecourt: #17171a;
+  --forecourt-2: #26262b;
+  --sticker: #e3070d;
+  --sticker-ink: #ffffff;
+  --paper: #f5f5f6;
   --surface: #ffffff;
-  --surface-2: #fafbfa;
-  --ink: #17201c;
-  --muted: #5b6661;
-  --line: #d8ddd9;
+  --surface-2: #fafafa;
+  --ink: #18181b;
+  --muted: #5d5d66;
+  --line: #dcdce0;
   --danger: #b3261e;
   --danger-bg: #fbeceb;
   --ok: #1f7a4d;
@@ -35,17 +35,17 @@
 }
 
 body.site {
-  --paper: #0b1411;
-  --surface: #121e1a;
-  --surface-2: #17251f;
-  --ink: #eef2ef;
-  --muted: #9aaba4;
-  --line: #24352f;
+  --paper: #0a0a0b;
+  --surface: #141416;
+  --surface-2: #1b1b1e;
+  --ink: #f2f2f3;
+  --muted: #a6a6ae;
+  --line: #2a2a2f;
   --danger: #ff8a80;
   --danger-bg: #3a1714;
   --ok: #7ad6a2;
   --ok-bg: #12301f;
-  --focus: #f4c430;
+  --focus: #ffffff;
 }
 
 *,
@@ -132,17 +132,46 @@ p {
   }
 }
 
-.wordmark {
-  font-family: var(--font-display);
-  font-weight: 800;
-  font-size: 1.375rem;
-  letter-spacing: 0.01em;
-  text-decoration: none;
-  white-space: nowrap;
+/* The Agoloso Motors badge (transparent PNG/WebP, so it sits on any dark surface) */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
+  line-height: 0;
 }
 
-.wordmark span {
-  color: var(--sticker);
+.brand img {
+  width: auto;
+  height: 52px;
+}
+
+/* Header: the badge is large over the hero and shrinks once the header turns solid */
+.site-header .brand img {
+  height: 56px;
+  transition: height 0.5s var(--ease);
+}
+
+.site-header:not(.is-solid) .brand img {
+  height: 96px;
+}
+
+@media (max-width: 760px) {
+  .site-header .brand img {
+    height: 46px;
+  }
+  .site-header:not(.is-solid) .brand img {
+    height: 72px;
+  }
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand-footer img {
+  height: 64px;
 }
 
 /* ================= Header ================= */
@@ -166,7 +195,7 @@ p {
 }
 
 .site-header.is-solid {
-  background: rgba(11, 20, 17, 0.92);
+  background: rgba(10, 10, 11, 0.92);
   backdrop-filter: blur(10px);
   border-bottom-color: rgba(255, 255, 255, 0.08);
 }
@@ -185,7 +214,9 @@ p {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  height: var(--header-h);
+  min-height: var(--header-h);
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
 .site-nav {
@@ -278,7 +309,7 @@ p {
   justify-content: center;
   gap: 32px;
   padding: calc(var(--header-h) + 24px) var(--gutter) 48px;
-  background: #0b1411;
+  background: #0a0a0b;
   color: #fff;
   visibility: hidden;
   opacity: 0;
@@ -314,7 +345,7 @@ p {
 }
 
 .mobile-menu .menu-foot {
-  color: #9aaba4;
+  color: #a6a6ae;
   font-size: var(--step--1);
 }
 
@@ -363,7 +394,7 @@ body.menu-open {
   display: flex;
   align-items: flex-end;
   overflow: hidden;
-  background: #050a08;
+  background: #050505;
   color: #fff;
   isolation: isolate;
 }
@@ -387,12 +418,12 @@ body.menu-open {
   inset: 0;
   z-index: -1;
   background:
-    linear-gradient(to top, rgba(5, 10, 8, 0.95) 0%, rgba(5, 10, 8, 0.55) 40%, rgba(5, 10, 8, 0.1) 70%),
-    linear-gradient(to right, rgba(5, 10, 8, 0.6), transparent 60%);
+    linear-gradient(to top, rgba(5, 5, 6, 0.95) 0%, rgba(5, 5, 6, 0.55) 40%, rgba(5, 5, 6, 0.1) 70%),
+    linear-gradient(to right, rgba(5, 5, 6, 0.6), transparent 60%);
 }
 
 .hero-content {
-  padding-top: calc(var(--header-h) + 48px);
+  padding-top: calc(var(--header-h) + 88px);
   padding-bottom: 96px;
 }
 
@@ -446,7 +477,7 @@ body.menu-open {
 }
 
 .quick-search select option {
-  color: #17201c;
+  color: #18181b;
 }
 
 @media (max-width: 760px) {
@@ -590,7 +621,7 @@ body.menu-open {
   overflow: hidden;
   color: #fff;
   isolation: isolate;
-  background: #050a08;
+  background: #050505;
 }
 
 .feature-media {
@@ -649,7 +680,7 @@ body.menu-open {
   padding: 6px 12px;
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 999px;
-  background: rgba(5, 10, 8, 0.45);
+  background: rgba(5, 5, 6, 0.45);
   backdrop-filter: blur(6px);
   color: #fff;
   font: inherit;
@@ -662,7 +693,7 @@ body.menu-open {
 .video-toggle:hover,
 .video-toggle:focus-visible {
   opacity: 1;
-  background: rgba(5, 10, 8, 0.7);
+  background: rgba(5, 5, 6, 0.7);
 }
 
 .video-toggle svg {
@@ -676,7 +707,7 @@ body.menu-open {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(to top, rgba(5, 10, 8, 0.92) 0%, rgba(5, 10, 8, 0.35) 45%, transparent 75%);
+  background: linear-gradient(to top, rgba(5, 5, 6, 0.92) 0%, rgba(5, 5, 6, 0.35) 45%, transparent 75%);
 }
 
 .feature-content {
@@ -777,7 +808,7 @@ body.menu-open {
 }
 
 .btn-sticker:hover {
-  background: #ffd447;
+  background: #c10006;
 }
 
 .btn-primary {
@@ -791,7 +822,7 @@ body.menu-open {
 
 body.site .btn-primary {
   background: #fff;
-  color: #0b1411;
+  color: #0a0a0b;
 }
 
 body.site .btn-primary:hover {
@@ -817,7 +848,7 @@ body.site .btn-primary:hover {
 
 .btn-outline:hover {
   background: #fff;
-  color: #0b1411;
+  color: #0a0a0b;
   border-color: #fff;
 }
 
@@ -1125,7 +1156,7 @@ textarea[aria-invalid='true'] {
   z-index: 1;
   padding: 4px 10px;
   border-radius: var(--radius);
-  background: rgba(5, 10, 8, 0.8);
+  background: rgba(5, 5, 6, 0.8);
   color: #fff;
   font-size: var(--step--1);
   font-weight: 600;
@@ -1262,7 +1293,7 @@ textarea[aria-invalid='true'] {
 }
 
 .calc-result dt {
-  color: #cfdcd6;
+  color: #c9c9cf;
 }
 
 .calc-result dd {
@@ -1274,7 +1305,7 @@ textarea[aria-invalid='true'] {
 .calc-note {
   margin-top: 16px;
   font-size: var(--step--1);
-  color: #cfdcd6;
+  color: #c9c9cf;
 }
 
 /* ================= Visit / contact ================= */

@@ -17,8 +17,13 @@ body.admin {
   height: 100vh;
 }
 
-.admin-nav .wordmark {
-  padding: 0 8px;
+.admin-nav .brand {
+  justify-content: center;
+  width: 100%;
+}
+
+.admin-nav .brand img {
+  height: 110px;
 }
 
 .admin-nav ul {
@@ -36,7 +41,7 @@ body.admin {
   padding: 10px 12px;
   border-radius: var(--radius);
   text-decoration: none;
-  color: #dbe6e1;
+  color: #d4d4d8;
 }
 
 .admin-nav a:hover {
@@ -70,7 +75,7 @@ body.admin {
   padding: 12px 8px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   font-size: var(--step--1);
-  color: #cfdcd6;
+  color: #c9c9cf;
   display: grid;
   gap: 8px;
 }
@@ -146,6 +151,12 @@ body.admin {
   }
   .admin-nav .menu-toggle {
     display: block;
+  }
+  .admin-nav .brand {
+    width: auto;
+  }
+  .admin-nav .brand img {
+    height: 48px;
   }
   .admin-menu {
     display: none;
@@ -238,7 +249,7 @@ td {
 th {
   font-weight: 700;
   color: var(--muted);
-  background: #fafbfa;
+  background: #fafafa;
   white-space: nowrap;
 }
 
@@ -274,7 +285,7 @@ td select {
   height: 48px;
   object-fit: cover;
   border-radius: 2px;
-  background: #e4e8e5;
+  background: #e4e4e7;
 }
 
 .cell-sub {
@@ -283,7 +294,7 @@ td select {
 }
 
 .detail-row td {
-  background: #fafbfa;
+  background: #fafafa;
 }
 
 .detail {
@@ -353,7 +364,7 @@ td select {
   font-size: 0.75rem;
   font-weight: 700;
   white-space: nowrap;
-  background: #e8ece9;
+  background: #ebebee;
   color: var(--ink);
 }
 
@@ -389,7 +400,7 @@ dialog {
 }
 
 dialog::backdrop {
-  background: rgba(16, 50, 42, 0.55);
+  background: rgba(10, 10, 11, 0.6);
 }
 
 .dialog-form {
@@ -442,12 +453,15 @@ body.login {
   gap: 16px;
 }
 
-.login-card .wordmark {
-  color: var(--forecourt);
+/* Dark band at the top of the card so the silver badge stays visible */
+.login-card .brand {
+  justify-content: center;
+  margin: -32px -32px 8px;
+  padding: 24px;
+  background: #0a0a0b;
+  border-radius: var(--radius) var(--radius) 0 0;
 }
 
-.login-card .wordmark span {
-  color: inherit;
-  background: var(--sticker);
-  padding: 0 4px;
+.login-card .brand img {
+  height: 120px;
 }

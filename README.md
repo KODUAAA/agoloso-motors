@@ -120,4 +120,4 @@ test/api.test.js       end-to-end API tests
 
 ## Media credits
 
-Sample car photos are from [Unsplash](https://unsplash.com) and background videos from [Mixkit](https://mixkit.co) (free licences). Replace them with your own photos of your stock before going live. To host your own background video, put it in `public/media/` and change the `data-src` of the `<video>` tags in `public/index.html`.
+Sample car photos ([Unsplash](https://unsplash.com)) and background videos ([Mixkit](https://mixkit.co)) are free-licence stock media, stored in `public/media/` so the site serves them itself. Replace them with photos of your own stock before going live. To change a background video, replace the file in `public/media/videos/` with a short, muted clip.

@@ -154,6 +154,12 @@ describe('Agoloso Motors API', { skip: !TEST_DB && 'set TEST_DATABASE_URL to run
       assert.equal(patched.data.data.price, 26900);
       assert.equal(patched.data.data.make, 'Kia', 'fields not sent are left alone');
 
+      // Photos stored on the site itself are accepted; other relative paths are not
+      const local = await call(`/vehicles/${id}`, { method: 'PATCH', token: adminToken, body: { images: ['/media/photos/kia.webp'] } });
+      assert.equal(local.status, 200);
+      const sneaky = await call(`/vehicles/${id}`, { method: 'PATCH', token: adminToken, body: { images: ['/../../etc/passwd', '//evil.com/x.jpg'] } });
+      assert.equal(sneaky.status, 400);
+
       assert.equal((await call(`/vehicles/${id}`, { method: 'DELETE', token: adminToken })).status, 204);
       assert.equal((await call(`/vehicles/${id}`)).status, 404);
     });

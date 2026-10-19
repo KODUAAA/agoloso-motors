@@ -28,8 +28,8 @@ export function createApp() {
         directives: {
           // Vehicle photos can be hosted anywhere (Supabase Storage, Unsplash, etc.)
           'img-src': ["'self'", 'data:', 'https:'],
-          // Background videos: self-hosted files in public/media, or Mixkit's free stock library
-          'media-src': ["'self'", 'https://assets.mixkit.co'],
+          // Background videos are served from public/media/videos
+          'media-src': ["'self'"],
           'upgrade-insecure-requests': isProduction ? [] : null,
         },
       },

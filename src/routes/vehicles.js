@@ -34,7 +34,15 @@ const vehicleFields = z.object({
   color: optionalText(40),
   engine: optionalText(80),
   description: optionalText(5000),
-  images: z.array(z.url({ protocol: /^https?$/ }).max(1000)).max(20),
+  // Full web addresses, or photos stored on this site (/media/photos/...)
+  images: z
+    .array(
+      z.union([
+        z.url({ protocol: /^https?$/ }).max(1000),
+        z.string().regex(/^\/media\/(?!.*\.\.)[\w\-./]+$/, 'Enter a full web address starting with https://'),
+      ]),
+    )
+    .max(20),
   status: z.enum(STATUSES),
   featured: z.boolean(),
 });

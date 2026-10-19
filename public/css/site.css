@@ -988,7 +988,7 @@ textarea[aria-invalid='true'] {
 
 @media (max-width: 560px) {
   .form-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1079,7 +1079,7 @@ textarea[aria-invalid='true'] {
 
 @media (max-width: 760px) {
   .steps {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 24px;
   }
 }
@@ -1110,7 +1110,7 @@ textarea[aria-invalid='true'] {
 
 @media (max-width: 900px) {
   .inventory {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 16px;
   }
   .filters {
@@ -1148,7 +1148,7 @@ textarea[aria-invalid='true'] {
 
 .car-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(270px, 100%), 1fr));
   gap: 28px 24px;
 }
 
@@ -1296,7 +1296,7 @@ textarea[aria-invalid='true'] {
 
 @media (max-width: 760px) {
   .calculator {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -1352,7 +1352,7 @@ textarea[aria-invalid='true'] {
 
 @media (max-width: 760px) {
   .visit {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 32px;
   }
 }
@@ -1432,7 +1432,7 @@ body.no-hero main {
 /* On phones the title and price come straight after the photos */
 @media (max-width: 900px) {
   .vehicle {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     grid-template-rows: none;
     grid-template-areas: 'gallery' 'aside' 'about';
   }
@@ -1613,7 +1613,7 @@ body.no-hero main {
 
 @media (max-width: 900px) {
   .find {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 32px;
     padding-top: 32px;
   }

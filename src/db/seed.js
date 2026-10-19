@@ -4,51 +4,51 @@ import bcrypt from 'bcryptjs';
 import { fileURLToPath } from 'node:url';
 import { pool, query } from './index.js';
 
-// Photos were checked by eye to make sure each one shows the car it is listed against
-const photo = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1600&q=75`;
+// Photos were checked by eye to make sure each one shows the car it is listed against.
+// They are served from public/media/photos so the site does not depend on another website.
 
 export const sampleVehicles = [
   {
     make: 'BMW', model: 'M5 Competition', year: 2019, price: 64900, mileage: 38200,
     fuel_type: 'petrol', transmission: 'automatic', body_type: 'sedan', color: 'Alpine White', engine: '4.4L Twin-Turbo V8',
     description: 'Competition package with carbon ceramic brakes, bronze forged wheels, Bowers & Wilkins audio and full BMW service history.',
-    images: [photo('photo-1555215695-3004980ad54e')], featured: true,
+    images: ['/media/photos/bmw-m5-competition.webp'], featured: true,
   },
   {
     make: 'Porsche', model: '911 Turbo S', year: 2021, price: 189500, mileage: 12900,
     fuel_type: 'petrol', transmission: 'automatic', body_type: 'coupe', color: 'GT Silver Metallic', engine: '3.8L Twin-Turbo Flat-Six',
     description: 'Sport Chrono, sports exhaust, front axle lift and ceramic brakes. Garaged and covered, never tracked.',
-    images: [photo('photo-1594502184342-2e12f877aa73')], featured: true,
+    images: ['/media/photos/porsche-911-turbo-s.webp'], featured: true,
   },
   {
     make: 'Tesla', model: 'Model 3 Long Range', year: 2022, price: 38900, mileage: 31000,
     fuel_type: 'electric', transmission: 'automatic', body_type: 'sedan', color: 'Pearl White', engine: 'Dual Motor AWD',
     description: 'Long-range battery, Autopilot, glass roof and premium interior. Battery health report available.',
-    images: [photo('photo-1560958089-b8a1929cea89')], featured: true,
+    images: ['/media/photos/tesla-model-3.webp'], featured: true,
   },
   {
     make: 'Toyota', model: 'Tacoma TRD Off-Road', year: 2019, price: 36400, mileage: 54800,
     fuel_type: 'petrol', transmission: 'automatic', body_type: 'pickup', color: 'Quicksand', engine: '3.5L V6',
     description: 'Double cab with a 2-inch lift, all-terrain tyres, aftermarket wheels and LED light bar. Locking rear differential.',
-    images: [photo('photo-1559416523-140ddc3d238c')],
+    images: ['/media/photos/toyota-tacoma.webp'],
   },
   {
     make: 'Mercedes-AMG', model: 'GT R', year: 2020, price: 142000, mileage: 9600,
     fuel_type: 'petrol', transmission: 'automatic', body_type: 'coupe', color: 'Selenite Grey Magno', engine: '4.0L Twin-Turbo V8',
     description: 'Track-bred coupe with rear-wheel steering, adjustable coilovers and AMG Performance seats.',
-    images: [photo('photo-1618843479313-40f8afb4b4d8')],
+    images: ['/media/photos/mercedes-amg-gt-r.webp'],
   },
   {
     make: 'Nissan', model: 'Altima 2.5 SR', year: 2018, price: 14250, mileage: 71300,
     fuel_type: 'petrol', transmission: 'automatic', body_type: 'sedan', color: 'Storm Blue', engine: '2.5L 4-cylinder',
     description: 'Comfortable, economical commuter with sport-tuned suspension, remote start and a reversing camera.',
-    images: [photo('photo-1581540222194-0def2dda95b8')],
+    images: ['/media/photos/nissan-altima.webp'],
   },
   {
     make: 'Ford', model: 'Explorer Police Interceptor Utility', year: 2018, price: 17900, mileage: 98400,
     fuel_type: 'petrol', transmission: 'automatic', body_type: 'suv', color: 'Oxford White', engine: '3.7L V6 AWD',
     description: 'Former fleet vehicle, decommissioned and fully serviced. Heavy-duty brakes and cooling, all-wheel drive, steel wheels.',
-    images: [photo('photo-1606611013016-969c19ba27bb')],
+    images: ['/media/photos/ford-explorer.webp'],
   },
   {
     make: 'Toyota', model: 'Land Cruiser Prado', year: 2022, price: 58500, mileage: 21400,

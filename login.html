@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Staff sign in | Agoloso Motors</title>
+    <link rel="icon" href="/img/brand/icon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="/img/brand/icon-512.png" type="image/png" sizes="512x512" />
+    <link rel="apple-touch-icon" href="/img/brand/apple-touch-icon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans+Condensed:wght@600;700;800&family=Fira+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="stylesheet" href="/css/admin.css" />
+    <script type="module" src="/js/login.js"></script>
+  </head>
+  <body class="login">
+    <main>
+      <form class="login-card" id="login-form" novalidate>
+        <a class="brand" href="/"><img src="/img/brand/logo.webp" alt="Agoloso Motors" width="657" height="452" /></a>
+        <h1 style="font-size: var(--step-2)">Staff sign in</h1>
+        <label class="field">Email
+          <input name="email" type="email" autocomplete="username" required autofocus />
+          <span class="field-error" data-error-for="email"></span>
+        </label>
+        <label class="field">Password
+          <input name="password" type="password" autocomplete="current-password" required />
+          <span class="field-error" data-error-for="password"></span>
+        </label>
+        <div class="form-status" role="alert"></div>
+        <button class="btn btn-primary" type="submit" data-busy="Signing in...">Sign in</button>
+      </form>
+    </main>
+  </body>
+</html>
